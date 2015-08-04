@@ -37,7 +37,6 @@ import net.seninp.jmotif.sax.alphabet.NormalAlphabet;
 import net.seninp.jmotif.sax.datastructures.SAXRecords;
 import net.seninp.util.StackTrace;
 
-
 public class ColorGameBean {
 
     private String background = "yellow";
@@ -47,7 +46,7 @@ public class ColorGameBean {
     private String hint = "no";
     private double[] a;
     private double[] b;
-    public int count=-1;
+    public int count=0;
     private int attempts = 160;
         private int intval = 40;
     private boolean tookHints = false;
@@ -55,9 +54,9 @@ public class ColorGameBean {
 
 
 
-    public static String ts1 = "C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data2.txt";
+    //public static String ts1 = "C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data2.txt";
 	public static Alphabet normalA = new NormalAlphabet();
-	public static TSProcessor tsp= new TSProcessor();
+	//public static TSProcessor tp_L= new TSProcessor();
 	private static final String CR = "\n";
 	private static TSProcessor tp = new TSProcessor();
 	private static NormalAlphabet na = new NormalAlphabet();
@@ -68,36 +67,32 @@ public class ColorGameBean {
 	private static NumerosityReductionStrategy SAX_NR_STRATEGY=NumerosityReductionStrategy.NONE;
 	private static double SAX_NORM_THRESHOLD=0.01;
 	private static String IN_FILE="C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data2.txt";
+	private static String IN_FILE_L="C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data1.txt";
+	
 	private static String OUT_FILE="out.txt";
 	public static GrammarRules rules;
 	private static Integer lens=0;
 	public static ArrayList<ArrayList<Double>> motif_path=new ArrayList<ArrayList<Double>>();
+	public static ArrayList<ArrayList<Double>> motif_pathL=new ArrayList<ArrayList<Double>>();
+	
 	public static double[] series;
+	public static double[] seriesL;
+	
     public static ArrayList<Double> first_path = new ArrayList<Double>();
     public static ArrayList<Double> first_path_sample = new ArrayList<Double>();
-
+    public static ArrayList<Double> first_path_L = new ArrayList<Double>();
+    public static ArrayList<Double> first_path_sample_L = new ArrayList<Double>();
     
-    public void processRequest() {
-
-        // background = "yellow";
-        // foreground = "red";
-
-        if (! color1.equals(foreground)) {
-            if (color1.equalsIgnoreCase("black") ||
-                        color1.equalsIgnoreCase("cyan")) {
-                        background = color1;
-                }
-        }
-
-        if (! color2.equals(background)) {
-            if (color2.equalsIgnoreCase("black") ||
-                        color2.equalsIgnoreCase("cyan")) {
-                        foreground = color2;
-            }
-        }
-
-        attempts++;
-    }
+    
+    public static ArrayList<Double> second_path = new ArrayList<Double>();
+    public static ArrayList<Double> second_path_sample = new ArrayList<Double>();
+    public static ArrayList<Double> second_path_L = new ArrayList<Double>();
+    public static ArrayList<Double> second_path_sample_L = new ArrayList<Double>();
+    
+    public static int count2=0;
+    private static Integer sample_rate=6;
+	
+    
 
     public void setColor2(String x) {
         color2 = x;
@@ -112,6 +107,8 @@ public class ColorGameBean {
          //       SAXRule r = SequiturFactory.runSequitur(TEST3_STRING);
           //      System.out.println(r.printRules());
                 series = tp.readTS(IN_FILE, 0);
+                seriesL = tp.readTS(IN_FILE_L, 0);
+                
                 SAXRecords saxData = sp.ts2saxViaWindow(series, SAX_WINDOW_SIZE, SAX_PAA_SIZE, na.getCuts(SAX_ALPHABET_SIZE),
                         SAX_NR_STRATEGY, SAX_NORM_THRESHOLD);
                 
@@ -160,7 +157,10 @@ public class ColorGameBean {
                    
                     getmotif4Record(intervals);
                     setFirstMotif();    
-                    resample(6);
+                    resample(sample_rate);
+                    setIMotif();    
+                    resample2(sample_rate);
+                    
                     return;
 /*                    
 for (int i = 0; i < intervals.size(); i++) {
@@ -225,7 +225,7 @@ for (int i = 0; i < intervals.size(); i++) {
     }
 
     public double returnLat(){
-	    count++;
+	    
 	    //double temp=first_path_sample.get(count);
     	return first_path_sample.get(count).doubleValue();
 	  
@@ -236,9 +236,32 @@ for (int i = 0; i < intervals.size(); i++) {
     //    count++;
     //    return x;
     	//Test with one array
-    	  return 116.33354;
+    	double x=first_path_sample_L.get(count).doubleValue();
+    	count++;
+    	  return x;
 
     }
+    
+    
+public double returnLat2(){
+	    
+	    //double temp=first_path_sample.get(count);
+    	return second_path_sample.get(count2).doubleValue();
+	  
+    }
+
+    public double returnLon2(){
+	//double x=b[count];
+    //    count++;
+    //    return x;
+    	//Test with one array
+    	double x=second_path_sample_L.get(count2).doubleValue();
+    	count2++;
+    	  return x;
+
+    }
+    
+    
     public void setColor1(String x) {
         color1 = x;
     }
@@ -295,6 +318,11 @@ for (int i = 0; i < intervals.size(); i++) {
         intval = value;
         }
 
+    public void setSampleRate(int value) {
+        sample_rate = value;
+        }
+
+    
     public int getIntval() {
         return intval;
         }
@@ -319,21 +347,35 @@ for (int i = 0; i < intervals.size(); i++) {
 
 	    // GET ONE SPECIAL subsequence DATA
         ArrayList<Double> dl=new ArrayList<Double>();
-		for (int i = x; i < y; i++) {
+        ArrayList<Double> dlL=new ArrayList<Double>();
+		
+        for (int i = x; i < y; i++) {
 			dl.add(series[i]);
+			dlL.add(seriesL[i]);
           }
 		motif_path.add(dl);
+		motif_pathL.add(dlL);
+		
 	  }
    
 	public static void setFirstMotif() throws Exception {
 		// implement after getmotif4Record
 		first_path=motif_path.get(0);
+		first_path_L=motif_pathL.get(0);
 	}
+	
+	public static void setIMotif() throws Exception {
+		// implement after getmotif4Record
+		second_path=motif_path.get(1);
+		second_path_L=motif_pathL.get(1);
+	}
+	
 	public static void resample(Integer n)
 	{
 		Integer l=first_path.size();
 		Integer cyc=l/n;
 		Integer c=0;
+	    int k=0;
 		first_path_sample.add(first_path.get(0));
 		for (Double x : first_path)
 		{
@@ -341,10 +383,37 @@ for (int i = 0; i < intervals.size(); i++) {
 			if(c==cyc)
 			{
 				first_path_sample.add(x);
+				first_path_sample_L.add(first_path_L.get(k));
 				c=0;
 			}
+			k++;
 		}
 		first_path_sample.add(first_path.get(l-1));
+		first_path_sample_L.add(first_path_L.get(l-1));
 	}
+	
+	
+	public static void resample2(Integer n)
+	{
+		Integer l=second_path.size();
+		Integer cyc=l/n;
+		Integer c=0;
+	    int k=0;
+		second_path_sample.add(second_path.get(0));
+		for (Double x : second_path)
+		{
+			c++;
+			if(c==cyc)
+			{
+				second_path_sample.add(x);
+				second_path_sample_L.add(second_path_L.get(k));
+				c=0;
+			}
+			k++;
+		}
+		second_path_sample.add(second_path.get(l-1));
+		second_path_sample_L.add(second_path_L.get(l-1));
+	
+     }
 }
 
