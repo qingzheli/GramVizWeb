@@ -33,7 +33,7 @@
 
 <body>
 
-	<div id="map" style="width: 600px; height: 400px"></div>
+	<div id="map" style="width: 1000px; height: 1000px"></div>
 
 
 
@@ -67,9 +67,8 @@
 			  ['${cb.returnLat2()}', '${cb.returnLon2()}'],
               ['${cb.returnLat2()}', '${cb.returnLon2()}'],
 			  ['${cb.returnLat2()}', '${cb.returnLon2()}'],
-			  ['${cb.returnLat2()}', '${cb.returnLon2()}'],
 			  ['${cb.returnLat2()}', '${cb.returnLon2()}']
-			  			  
+			  
 
         ];
         alert(lat.join('\n'));
@@ -89,7 +88,7 @@
 
 				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 
-				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+				'Imagery ?<a href="http://mapbox.com">Mapbox</a>',
 
 			id: 'mapbox.streets'
 
@@ -181,8 +180,7 @@
         var pointD = new L.LatLng(lat[3][0], lat[3][1]);
 		var pointE = new L.LatLng(lat[4][0], lat[4][1]);
         var pointF = new L.LatLng(lat[5][0], lat[5][1]);
-		var pointG = new L.LatLng(lat[6][0], lat[6][1]);
-
+        var pointG = new L.LatLng(lat[6][0], lat[6][1]);
 var pointList = [pointA, pointB, pointC, pointD,pointE,pointF,pointG];
 
 
@@ -265,15 +263,6 @@ L.circle(lat2[5], 1, {
 
 }).addTo(map).bindPopup("I am circle 6.");
 
-L.circle(lat2[6], 1, {
-
-	color: 'blue',
-
-	fillColor: '#f03',
-
-	fillOpacity: 0.5
-
-}).addTo(map).bindPopup("I am circle 7.");
 
 var point1 = new L.latLng(lat2[0][0], lat2[0][1]);
 var point2 = new L.LatLng(lat2[1][0], lat2[1][1]);
@@ -281,9 +270,8 @@ var point3 = new L.LatLng(lat2[2][0], lat2[2][1]);
 var point4 = new L.LatLng(lat2[3][0], lat2[3][1]);
 var point5 = new L.LatLng(lat2[4][0], lat2[4][1]);
 var point6 = new L.LatLng(lat2[5][0], lat2[5][1]);
-var point7 = new L.LatLng(lat2[6][0], lat2[6][1]);
 
-var pointList = [point1, point2, point3, point4,point5,point6,point7];
+var pointList = [point1, point2, point3, point4,point5,point6];
 
 
 
