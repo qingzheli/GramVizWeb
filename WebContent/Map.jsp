@@ -27,7 +27,7 @@
     cb.processRequest();
     cb.getPath();
     cb.getmotif();
-    cb.clear();
+
 %>
 
 
@@ -41,10 +41,20 @@
 
 	<script>
 
-        var lat=[['${cb.returnLat()}', '${cb.returnLon()}'],['${cb.returnLat()}', '${cb.returnLon()}']];
-          var s='${cb.getIntval()}';
-          var s2=s.toString();
-          alert(lat.join('\n'));
+	
+	
+        //var lat=[['${cb.returnLat()}', '${cb.returnLon()}'],['${cb.returnLat()}', '${cb.returnLon()}']];
+        // var lat = new Array(8); 
+        // var index=0;
+        // for	(index = 0; index < 8; index++) {
+        	    
+        //	}
+         
+        lat= [['${cb.returnLat()}', 116.32],['${cb.returnLat()}', 116.32],['${cb.returnLat()}', 116.32],['${cb.returnLat()}', 116.32],['${cb.returnLat()}', 116.32],['${cb.returnLat()}', 116.32]];
+        alert(lat.join('\n'));
+        var s='${cb.getIntval()}';
+        var s2=s.toString();
+         
 
 		var map = L.map('map').setView([40.001,116.3], 13);
 
@@ -72,7 +82,7 @@
 			.bindPopup(x).openPopup();
 
 
-
+/*
 		L.circle(lat[0], 100, {
 
 			color: 'red',
@@ -92,7 +102,7 @@
 			fillOpacity: 0.5
 
 		}).addTo(map).bindPopup("I am circle 2.");
-
+*/
 
                var polyline = L.polyline(lat, {color: 'blue'}).addTo(map);
 // zoom the map to the polyline

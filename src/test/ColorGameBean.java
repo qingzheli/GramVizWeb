@@ -47,7 +47,7 @@ public class ColorGameBean {
     private String hint = "no";
     private double[] a;
     private double[] b;
-    private int count;
+    public int count=-1;
     private int attempts = 160;
         private int intval = 40;
     private boolean tookHints = false;
@@ -58,7 +58,6 @@ public class ColorGameBean {
     public static String ts1 = "C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data2.txt";
 	public static Alphabet normalA = new NormalAlphabet();
 	public static TSProcessor tsp= new TSProcessor();
-	private static boolean fileOpen;
 	private static final String CR = "\n";
 	private static TSProcessor tp = new TSProcessor();
 	private static NormalAlphabet na = new NormalAlphabet();
@@ -71,10 +70,13 @@ public class ColorGameBean {
 	private static String IN_FILE="C:\\Users\\yfeng\\webapps\\GramVizWeb\\upload\\data2.txt";
 	private static String OUT_FILE="out.txt";
 	public static GrammarRules rules;
+	private static Integer lens=0;
 	public static ArrayList<ArrayList<Double>> motif_path=new ArrayList<ArrayList<Double>>();
 	public static double[] series;
+    public static ArrayList<Double> first_path = new ArrayList<Double>();
+    public static ArrayList<Double> first_path_sample = new ArrayList<Double>();
 
-
+    
     public void processRequest() {
 
         // background = "yellow";
@@ -137,7 +139,6 @@ public class ColorGameBean {
                   sb.append("# paa size: ").append(SAX_PAA_SIZE).append(CR);
                   sb.append("# alphabet size: ").append(SAX_ALPHABET_SIZE).append(CR);
                   bw.write(sb.toString());
-                  fileOpen = true;
                 }
                 catch (IOException e) {
                   System.err.print("Encountered an error while writing stats file: \n" + StackTrace.toString(e)
@@ -158,6 +159,8 @@ public class ColorGameBean {
                     
                    
                     getmotif4Record(intervals);
+                    setFirstMotif();    
+                    resample(6);
                     return;
 /*                    
 for (int i = 0; i < intervals.size(); i++) {
@@ -204,7 +207,7 @@ for (int i = 0; i < intervals.size(); i++) {
 
 	}
 
-
+    //a test for js
     public void getPath() {
          //for file read, it should read a upload file
          //for grammarViz, it should return motif path
@@ -222,13 +225,19 @@ for (int i = 0; i < intervals.size(); i++) {
     }
 
     public double returnLat(){
-	return a[count];
+	    count++;
+	    //double temp=first_path_sample.get(count);
+    	return first_path_sample.get(count).doubleValue();
+	  
     }
 
     public double returnLon(){
-	double x=b[count];
-        count++;
-        return x;
+	//double x=b[count];
+    //    count++;
+    //    return x;
+    	//Test with one array
+    	  return 116.33354;
+
     }
     public void setColor1(String x) {
         color1 = x;
@@ -252,6 +261,9 @@ for (int i = 0; i < intervals.size(); i++) {
         return attempts;
     }
 
+    public Integer getLens() {
+    	return lens;
+    }
     public boolean getHint() {
         return hint.equalsIgnoreCase("Hint");
     }
@@ -296,7 +308,8 @@ for (int i = 0; i < intervals.size(); i++) {
 		;
 	    for(RuleInterval rl : intervals)
 	    {
-	    	
+	    	if(lens==0)
+	    		lens=rl.getEndPos()-rl.getStartPos();
 	    	getmotif(rl.getStartPos(),rl.getEndPos());
 	    }
 
@@ -309,10 +322,29 @@ for (int i = 0; i < intervals.size(); i++) {
 		for (int i = x; i < y; i++) {
 			dl.add(series[i]);
           }
-		
 		motif_path.add(dl);
-
 	  }
-
+   
+	public static void setFirstMotif() throws Exception {
+		// implement after getmotif4Record
+		first_path=motif_path.get(0);
+	}
+	public static void resample(Integer n)
+	{
+		Integer l=first_path.size();
+		Integer cyc=l/n;
+		Integer c=0;
+		first_path_sample.add(first_path.get(0));
+		for (Double x : first_path)
+		{
+			c++;
+			if(c==cyc)
+			{
+				first_path_sample.add(x);
+				c=0;
+			}
+		}
+		first_path_sample.add(first_path.get(l-1));
+	}
 }
 
