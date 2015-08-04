@@ -329,6 +329,7 @@ public double returnLat2(){
     public void clear()
     {
        count=0;
+       count2=0;
     }
 	public static void getmotif4Record(ArrayList<RuleInterval> intervals) throws Exception {
 

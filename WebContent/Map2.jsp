@@ -115,9 +115,6 @@
 		}).addTo(map2);
 
 
-		L.marker([40.001,116.3]).addTo(map)
-
-			.bindPopup(x).openPopup();
 
 
 

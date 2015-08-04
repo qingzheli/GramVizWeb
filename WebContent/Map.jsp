@@ -43,18 +43,11 @@
 
 	
 	
-        //var lat=[['${cb.returnLat()}', '${cb.returnLon()}'],['${cb.returnLat()}', '${cb.returnLon()}']];
-        // var lat = new Array(8); 
-        // var index=0;
-        // for	(index = 0; index < 8; index++) {
-        	    
-        //	}
          
         lat= [['${cb.returnLat()}', '${cb.returnLon()}'],
               ['${cb.returnLat()}', '${cb.returnLon()}'],
 			  ['${cb.returnLat()}', '${cb.returnLon()}'],
               ['${cb.returnLat()}', '${cb.returnLon()}'],
-			  ['${cb.returnLat()}', '${cb.returnLon()}'],
 			  ['${cb.returnLat()}', '${cb.returnLon()}'],
 			  ['${cb.returnLat()}', '${cb.returnLon()}']
 			  			  
@@ -111,7 +104,7 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 1.");
+		}).addTo(map).bindPopup("I am step 1.");
 
 		L.circle(lat[1], 1, {
 
@@ -121,7 +114,7 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 2.");
+		}).addTo(map).bindPopup("I am step 2.");
 
 		L.circle(lat[2], 1, {
 
@@ -131,7 +124,7 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 3.");
+		}).addTo(map).bindPopup("I am step 3.");
 
 				L.circle(lat[3], 1, {
 
@@ -141,7 +134,7 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 4.");
+		}).addTo(map).bindPopup("I am step 4.");
 
 		
 		L.circle(lat[4], 1, {
@@ -152,7 +145,7 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 5.");
+		}).addTo(map).bindPopup("I am step 5.");
 
 		L.circle(lat[5], 1, {
 
@@ -162,26 +155,16 @@
 
 			fillOpacity: 0.5
 
-		}).addTo(map).bindPopup("I am circle 6.");
+		}).addTo(map).bindPopup("I am step 6.");
 
-		L.circle(lat[6], 1, {
 
-			color: 'red',
-
-			fillColor: '#f03',
-
-			fillOpacity: 0.5
-
-		}).addTo(map).bindPopup("I am circle 7.");
-		
 		var pointA = new L.LatLng(lat[0][0], lat[0][1]);
         var pointB = new L.LatLng(lat[1][0], lat[1][1]);
 		var pointC = new L.LatLng(lat[2][0], lat[2][1]);
         var pointD = new L.LatLng(lat[3][0], lat[3][1]);
 		var pointE = new L.LatLng(lat[4][0], lat[4][1]);
         var pointF = new L.LatLng(lat[5][0], lat[5][1]);
-        var pointG = new L.LatLng(lat[6][0], lat[6][1]);
-var pointList = [pointA, pointB, pointC, pointD,pointE,pointF,pointG];
+var pointList = [pointA, pointB, pointC, pointD,pointE,pointF];
 
 
 
@@ -210,7 +193,7 @@ L.circle(lat2[0], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 1.");
+}).addTo(map).bindPopup("I am step 1.");
 
 L.circle(lat2[1], 1, {
 
@@ -220,7 +203,7 @@ L.circle(lat2[1], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 2.");
+}).addTo(map).bindPopup("I am step 2.");
 
 L.circle(lat2[2], 1, {
 
@@ -230,7 +213,7 @@ L.circle(lat2[2], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 3.");
+}).addTo(map).bindPopup("I am step 3.");
 
 		L.circle(lat2[3], 1, {
 
@@ -240,7 +223,7 @@ L.circle(lat2[2], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 4.");
+}).addTo(map).bindPopup("I am step 4.");
 
 
 L.circle(lat2[4], 1, {
@@ -251,7 +234,7 @@ L.circle(lat2[4], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 5.");
+}).addTo(map).bindPopup("I am step 5.");
 
 L.circle(lat2[5], 1, {
 
@@ -261,7 +244,7 @@ L.circle(lat2[5], 1, {
 
 	fillOpacity: 0.5
 
-}).addTo(map).bindPopup("I am circle 6.");
+}).addTo(map).bindPopup("I am step 6.");
 
 
 var point1 = new L.latLng(lat2[0][0], lat2[0][1]);
