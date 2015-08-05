@@ -36,6 +36,7 @@ import net.seninp.jmotif.sax.alphabet.Alphabet;
 import net.seninp.jmotif.sax.alphabet.NormalAlphabet;
 import net.seninp.jmotif.sax.datastructures.SAXRecords;
 import net.seninp.util.StackTrace;
+import test.SequiturInterface;
 
 public class ColorGameBean {
 
@@ -99,113 +100,16 @@ public class ColorGameBean {
     }
 
 
-    public static void getmotif() throws Exception {
+    public static void run() throws Exception {
+    	
 		// TODO Auto-generated method stub
 		//testNormalize();
 		//System.out.println("Hello World");
         //        String TEST3_STRING = "acc bcc acc bcc ccc acc bcc ccc dcc acc bcc ccc dcc ecc acc bcc ccc dcc ecc fcc";
          //       SAXRule r = SequiturFactory.runSequitur(TEST3_STRING);
           //      System.out.println(r.printRules());
-                series = tp.readTS(IN_FILE, 0);
-                seriesL = tp.readTS(IN_FILE_L, 0);
-                
-                SAXRecords saxData = sp.ts2saxViaWindow(series, SAX_WINDOW_SIZE, SAX_PAA_SIZE, na.getCuts(SAX_ALPHABET_SIZE),
-                        SAX_NR_STRATEGY, SAX_NORM_THRESHOLD);
-                
-                
-                
-                
-                String str = saxData.getSAXString(" ");
-                
-                SAXRule grammar = SequiturFactory.runSequitur(str);
-                
-                rules = grammar.toGrammarRulesData();
-                
-                SequiturFactory.updateRuleIntervals(rules, saxData, true, series,
-                        SAX_WINDOW_SIZE, SAX_PAA_SIZE);
-                
-                String fname = OUT_FILE;
-                
-                
-                BufferedWriter bw = null;
-                try {
-                  bw = new BufferedWriter(new FileWriter(new File(fname)));
-                  StringBuffer sb = new StringBuffer();
-                  sb.append("# filename: ").append(fname).append(CR);
-                  sb.append("# sliding window: ").append(SAX_WINDOW_SIZE).append(CR);
-                  sb.append("# paa size: ").append(SAX_PAA_SIZE).append(CR);
-                  sb.append("# alphabet size: ").append(SAX_ALPHABET_SIZE).append(CR);
-                  bw.write(sb.toString());
-                }
-                catch (IOException e) {
-                  System.err.print("Encountered an error while writing stats file: \n" + StackTrace.toString(e)
-                      + "\n");
-                }
-
-                for (GrammarRuleRecord ruleRecord : rules) {
-
-                  StringBuffer sb = new StringBuffer();
-                  sb.append("/// ").append(ruleRecord.getRuleName()).append(CR);
-                  sb.append(ruleRecord.getRuleName()).append(" -> \'")
-                      .append(ruleRecord.getRuleString().trim()).append("\', expanded rule string: \'")
-                      .append(ruleRecord.getExpandedRuleString()).append("\'").append(CR);
-
-                  if (!ruleRecord.getOccurrences().isEmpty()) {
-
-                    ArrayList<RuleInterval> intervals = ruleRecord.getRuleIntervals();
-                    
-                   
-                    getmotif4Record(intervals);
-                    setFirstMotif();    
-                    resample(sample_rate);
-                    setIMotif();    
-                    resample2(sample_rate);
-                    
-                    return;
-/*                    
-for (int i = 0; i < intervals.size(); i++) {
-                      starts[i] = intervals.get(i).getStartPos();
-                      lengths[i] = intervals.get(i).getEndPos() - intervals.get(i).getStartPos();
-                    }
-
-                    sb.append("subsequences starts: ").append(Arrays.toString(starts)).append(CR);
-                    sb.append("subsequences lengths: ").append(Arrays.toString(lengths)).append(CR);
-                  }
-
-                  sb.append("rule occurrence frequency ").append(ruleRecord.getOccurrences().size()).append(CR);
-                  sb.append("rule use frequency ").append(ruleRecord.getRuleUseFrequency()).append(CR);
-                  sb.append("min length ").append(ruleRecord.minMaxLengthAsString().split(" - ")[0]).append(CR);
-                  sb.append("max length ").append(ruleRecord.minMaxLengthAsString().split(" - ")[1]).append(CR);
-                  sb.append("mean length ").append(ruleRecord.getMeanLength()).append(CR);
-
-                  if (fileOpen) {
-                    try {
-                      bw.write(sb.toString());
-                    }
-                    catch (IOException e) {
-                      System.err.print("Encountered an error while writing stats file: \n"
-                          + StackTrace.toString(e) + "\n");
-                    }
-                  }
-                }
-               // try to write stats into the file
-                  if (fileOpen) {
-                    try {
-                      bw.close();
-                    }
-                    catch (IOException e) {
-                      System.err.print("Encountered an error while writing stats file: \n"
-                          + StackTrace.toString(e) + "\n");
-                    }
-*/
-                  }
-                  
-                }
-                
-                
-                //double[] series = tp.readTS(TS2GrammarParameters.IN_FILE, 0);
-
-	}
+    	SequiturInterface.run();
+      }
 
     //a test for js
     public void getPath() {
